@@ -27,6 +27,7 @@ class _CheckLoginScreenState extends State<CheckLoginScreen> {
     if(controller.userNameController.text.length<=0 || controller.passwordController.text.length<=0 || !await controller.checkLogin()){
       Get.offNamed('/login');
     }else{
+      controller.statusNotification.value = preferences.getBool("statusNotification")??false;
       controller.userNameLogin.value = controller.userNameController.text;
       Get.offNamed('/home');
     } 

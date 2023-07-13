@@ -14,6 +14,8 @@ import 'services/local_notification_service.dart';
 import 'views/pages/check_login_screen.dart';
 import 'views/pages/home_screen.dart';
 import 'views/pages/login_screen.dart';
+import 'dart:io' show Platform;
+import 'package:flutter/foundation.dart' show kIsWeb;
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   // If you're going to use other Firebase services in the background, such as Firestore,
@@ -23,57 +25,64 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   print("Handling a background message: ${message.messageId}");
 }
 
-void main() async{
-  
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
+void main() async {
+  if (!kIsWeb) {
+    if (Platform.isAndroid || Platform.isIOS) {
+      WidgetsFlutterBinding.ensureInitialized();
+      await Firebase.initializeApp(
+        options: DefaultFirebaseOptions.currentPlatform,
+      );
 
-  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
-  final _preferences = await SharedPreferences.getInstance();
-  FirebaseMessaging.instance;
-  
-  FirebaseMessaging messaging = FirebaseMessaging.instance;
+      FirebaseMessaging.onBackgroundMessage(
+          _firebaseMessagingBackgroundHandler);
+      final _preferences = await SharedPreferences.getInstance();
+      FirebaseMessaging.instance;
 
-  NotificationSettings settings = await messaging.requestPermission(
-    alert: true,
-    announcement: true,
-    badge: true,
-    carPlay: true,
-    criticalAlert: true,
-    provisional: true,
-    sound: true,
-  ).then((value) {
-    if(value.authorizationStatus == AuthorizationStatus.authorized || value.authorizationStatus == AuthorizationStatus.provisional){
-      print("user granted permission");
-      if(_preferences.getBool("statusNotification")??true){
-        FirebaseMessaging.instance.subscribeToTopic("AIKH");
-        _preferences.setBool("statusNotification", true);
-      }else{
-        FirebaseMessaging.instance.unsubscribeFromTopic("AIKH");
-        _preferences.setBool("statusNotification", false);
-      }
-    }else{
-      FirebaseMessaging.instance.unsubscribeFromTopic("AIKH");
-      _preferences.setBool("statusNotification", false);
+      FirebaseMessaging messaging = FirebaseMessaging.instance;
+
+      NotificationSettings settings = await messaging
+          .requestPermission(
+        alert: true,
+        announcement: true,
+        badge: true,
+        carPlay: true,
+        criticalAlert: true,
+        provisional: true,
+        sound: true,
+      )
+          .then((value) {
+        if (value.authorizationStatus == AuthorizationStatus.authorized ||
+            value.authorizationStatus == AuthorizationStatus.provisional) {
+          print("user granted permission");
+          if (_preferences.getBool("statusNotification") ?? true) {
+            FirebaseMessaging.instance.subscribeToTopic("AIKH");
+            _preferences.setBool("statusNotification", true);
+          } else {
+            FirebaseMessaging.instance.unsubscribeFromTopic("AIKH");
+            _preferences.setBool("statusNotification", false);
+          }
+        } else {
+          FirebaseMessaging.instance.unsubscribeFromTopic("AIKH");
+          _preferences.setBool("statusNotification", false);
+        }
+        return value;
+      });
+
+      LocalNotificationService.initialize();
+      FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+        print('Got a message whilst in the foreground!');
+        if (message.notification != null) {
+          LocalNotificationService.createAndDisplayNotification(message);
+        }
+      });
+      FirebaseMessaging.onMessageOpenedApp.listen(
+        (message) {
+          print("FirebaseMessaging.onMessageOpenedApp.listen");
+        },
+      );
+      FirebaseFirestore firestore = FirebaseFirestore.instance;
     }
-    return value;
-  });
-
-  LocalNotificationService.initialize();
-  FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-    print('Got a message whilst in the foreground!');
-    if (message.notification != null) {
-      LocalNotificationService.createAndDisplayNotification(message);
-    }
-  });
-  FirebaseMessaging.onMessageOpenedApp.listen(
-    (message) {
-      print("FirebaseMessaging.onMessageOpenedApp.listen");
-    },
-  );
-  FirebaseFirestore firestore = FirebaseFirestore.instance;
+  }
 
   runApp(const MyApp());
 }
@@ -87,7 +96,7 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   @override
-  void initState(){
+  void initState() {
     // TODO: implement initState
     super.initState();
     //start client persistent connection
@@ -111,6 +120,7 @@ class _MyAppState extends State<MyApp> {
     ]);
     super.dispose();
   }
+
   @override
   void deactivate() {
     // TODO: implement deactivate
