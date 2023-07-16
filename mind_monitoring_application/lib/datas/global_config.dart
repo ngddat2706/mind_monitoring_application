@@ -1,1 +1,1 @@
-const String safeZoneHost = "http://safezone.abcsolutions.com.vn";
+const String server = "brwsyswebapis.azurewebsites.net";

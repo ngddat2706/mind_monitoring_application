@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -173,59 +174,33 @@ class _AddDeviceScreenState extends State<AddDeviceScreen> {
                     ),
                     Container(
                       padding: EdgeInsets.only(top: 10, bottom: 5, left: 14),
-                      child: Text(
-                        "Trạng thái:",
-                        style: TextStyle(color: Colors.black, fontSize: 18),
-                      ),
-                    ),
-                    Container(
-                      margin: EdgeInsets.symmetric(vertical: 5, horizontal: 14),
-                      child: TextField(
-                        readOnly: false,
-                        onChanged: (value) {
-                          setState(() {});
-                          addDeviceController.checkRegisterStatusError();
-                        },
-                        textAlign: TextAlign.left,
-                        controller: addDeviceController.status,
-                        maxLines: 1,
-                        minLines: 1,
-                        style: TextStyle(
-                          color: Colors.indigo[900],
-                          fontSize: 16,
-                        ),
-                        decoration: InputDecoration(
-                            contentPadding: EdgeInsets.only(top: 2, bottom: 2, left: 10, right: 5),
-                            hintText: "Trạng thái",
-                            errorText: addDeviceController.statusError.value==""
-                              ?null
-                              :addDeviceController.statusError.value,
-                            hintStyle: TextStyle(color: Colors.grey, fontSize: 16),
-                            border: InputBorder.none,
-                            focusedErrorBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10),
-                                    borderSide: BorderSide(color: Color(0xFF1A237E))),
-                            enabledBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10),
-                                    borderSide: BorderSide(color: Colors.grey)),
-                            focusedBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10),
-                                    borderSide: BorderSide(color: Color(0xFF1A237E))),
-                            errorBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10),
-                                    borderSide: BorderSide(color: Colors.grey)),
-                            suffixIcon: addDeviceController.status.text.isNotEmpty
-                                ? IconButton(
-                                    onPressed: () {
-                                      addDeviceController.status.clear();
-                                      setState(() {});
-                                    },
-                                    icon: Icon(
-                                      Icons.cancel,
-                                      color: Colors.grey,
-                                    ),
-                                  )
-                                : null),
+                      child: Row(
+                        children: [
+                          Text(
+                            "Trạng thái:",
+                            style: TextStyle(color: Colors.black, fontSize: 18),
+                          ),
+                          SizedBox(width: 10,),
+                          DropdownButton<String>(
+                            value: addDeviceController.status.value,
+                            borderRadius: BorderRadius.circular(10),
+                            alignment: Alignment.center,
+                            items: <String>['hoạt động', 'dừng hoạt động']
+                                .map<DropdownMenuItem<String>>((String value) {
+                              return DropdownMenuItem<String>(
+                                value: value,
+                                child: Text(
+                                  value,
+                                  style: TextStyle(fontSize: 17),
+                                ),
+                              );
+                            }).toList(),
+                            // Step 5.
+                            onChanged: (String? newValue) {
+                              addDeviceController.status.value = newValue!;
+                            },
+                          ),
+                        ],
                       ),
                     ),
                     SizedBox(height: 40,),
@@ -268,9 +243,6 @@ class _AddDeviceScreenState extends State<AddDeviceScreen> {
                                   onPressed: () async {
                                     FocusScope.of(context).unfocus();
                                     if(!addDeviceController.checkRegisterNameError()){
-                                      return;
-                                    }
-                                    if(!addDeviceController.checkRegisterStatusError()){
                                       return;
                                     }
                                     if (state == ButtonState.init) {

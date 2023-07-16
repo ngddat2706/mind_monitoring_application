@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mind_monitoring_application/models/model_device.dart';
 
 import '../datas/globalData.dart';
 import '../services/value_service.dart';
@@ -14,25 +15,21 @@ class HomeController extends GetxController{
   LoginController loginController = Get.find();
   GlobalData globalData = Get.find();
   var loadingScreen = true.obs;
-  var indexDevice = "".obs;
-  List<String> listDevice = [
-    "KhaiND Demo1",
-    "Test Draft 0",
-    "string",
-    "MindLink HC05"
-  ];
+  Rx<ModelDevice> indexDevice = ModelDevice().obs;
  
 
   
-  Future<bool> fetchValueDataInDay() async {
+  Future<bool> fetchAllDevice() async {
     loadingScreen.value = true;
-    await Future.delayed(Duration(milliseconds: 500));
-    var newAccessToken =
-        await ValueService.fetchAllValue(loginController.userName, DateTime.now());
-    if (newAccessToken != null) {
+    //await Future.delayed(Duration(milliseconds: 500));
+    var newListDevice =
+        await ValueService.fetchAllDevice();
+    if (newListDevice != null) {
+      globalData.allDevice= newListDevice;
       loadingScreen.value = false;
       return true;
-    } 
+    }
+    globalData.allDevice.clear();
     return false;
   }
 

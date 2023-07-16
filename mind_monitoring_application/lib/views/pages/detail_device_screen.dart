@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mind_monitoring_application/controllers/home_controller.dart';
+import 'package:mind_monitoring_application/views/shared_component/general_screen.dart';
+import 'package:mind_monitoring_application/views/shared_component/models_result_screen.dart';
+import 'package:mind_monitoring_application/views/shared_component/raw_eff_data_screen.dart';
+import 'package:mind_monitoring_application/views/shared_component/tgam_extraction_screen.dart';
 
 
 class DetailDeviceScreen extends StatefulWidget {
@@ -64,7 +68,7 @@ class _DetailDeviceScreenState extends State<DetailDeviceScreen> with TickerProv
               ),
             ),
             Text(
-              homeController.indexDevice.value,
+              homeController.indexDevice.value.name??"",
               style: TextStyle(color: Colors.indigo[900], fontSize: 17),
             ),
           ],
@@ -103,18 +107,10 @@ class _DetailDeviceScreenState extends State<DetailDeviceScreen> with TickerProv
              child: TabBarView(
               controller: tabController,
                children: [
-                Container(
-                  color: Colors.white,
-                ),
-                Container(
-                  color: Colors.white,
-                ),
-                Container(
-                  color: Colors.white,
-                ),
-                Container(
-                  color: Colors.white,
-                )
+                GeneralScreen(),
+                TgamExtractionScreen(),
+                RawEEFDataScreen(),
+                ModelsResultScreen()
                ],
              ),
            ),

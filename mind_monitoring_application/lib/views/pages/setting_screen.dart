@@ -132,15 +132,19 @@ class _SettingScreenState extends State<SettingScreen>
     if (cantExit) {
       Get.closeAllSnackbars();
       Get.snackbar(
-        "AIKH",
+        "Brainwave System",
         "Nhấn lần nữa để đăng xuất!",
         isDismissible: true,
         duration: Duration(seconds: 2),
       );
       // false will do nothing when back press
     } else {
-      FirebaseMessaging.instance
-          .unsubscribeFromTopic(controller.userNameLogin.value);
+      if (!kIsWeb) {
+        if (Platform.isAndroid || Platform.isIOS) {
+          FirebaseMessaging.instance
+            .unsubscribeFromTopic(controller.userNameLogin.value);
+          }
+      }      
       controller.passwordController.clear();
       controller.userNameController.clear();
       controller.userName = "";

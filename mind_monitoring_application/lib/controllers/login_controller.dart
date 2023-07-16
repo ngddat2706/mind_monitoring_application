@@ -10,7 +10,7 @@ class LoginController extends GetxController{
   GlobalData globalData = Get.find();
   TextEditingController userNameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
-  var userNameLogin ="AIKH".obs;
+  var userNameLogin ="BrwS".obs;
   var statusNotification = true.obs;
 
   var userName = '';
