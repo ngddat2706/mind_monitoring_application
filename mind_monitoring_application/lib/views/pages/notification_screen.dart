@@ -1,10 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mind_monitoring_application/views/shared_component/font_style.dart';
-import 'package:status_alert/status_alert.dart';
-
-import '../../controllers/home_controller.dart';
 import '../../controllers/notification_controller.dart';
 
 class NotificationScreen extends StatefulWidget {
@@ -22,15 +18,15 @@ class _NotificationScreenState extends State<NotificationScreen>
     showCupertinoModalPopup<void>(
       context: context,
       builder: (BuildContext context) => CupertinoAlertDialog(
-        title: const Text('XÁC NHẬN'),
-        content: const Text('Đã xem tất cả thông báo!'),
+        title: const Text('CONFIRM'),
+        content: const Text('Viewed all notifications!'),
         actions: <CupertinoDialogAction>[
           CupertinoDialogAction(
             isDestructiveAction: true,
             onPressed: () {
               Navigator.pop(context);
             },
-            child: const Text('Hủy'),
+            child: const Text('Close'),
           ),
           CupertinoDialogAction(
             isDestructiveAction: false,
@@ -55,7 +51,7 @@ class _NotificationScreenState extends State<NotificationScreen>
               // }
              Navigator.pop(context);
             },
-            child: const Text('Đã xem'),
+            child: const Text('Save'),
           ),
         ],
       ),
@@ -67,8 +63,11 @@ class _NotificationScreenState extends State<NotificationScreen>
     // TODO: implement initState
     super.initState();
     notificationController.loadingScreen.value = false;
+    notificationController.indexNotification.value = 0;
     _tabController = TabController(length: 2, vsync: this);
-    _tabController.animateTo(0);
+    _tabController.addListener(() {
+      notificationController.indexNotification.value = _tabController.index;
+    });
   }
 
   @override
@@ -103,7 +102,7 @@ class _NotificationScreenState extends State<NotificationScreen>
                       }),
                     ),
                     child: Tooltip(
-                      message: "Quay lại",
+                      message: "Back",
                       child: Icon(
                         Icons.arrow_back_ios,
                         size: 25,
@@ -112,7 +111,7 @@ class _NotificationScreenState extends State<NotificationScreen>
                   ),
                 ),
                 Text(
-                  "THÔNG BÁO",
+                  "NOTIFICATION",
                   style: TextStyle(
                     color: Colors.indigo[900],
                     fontSize: 20,
@@ -134,7 +133,7 @@ class _NotificationScreenState extends State<NotificationScreen>
                     }),
                   ),
                   child: Tooltip(
-                    message: "Đã xem tất cả",
+                    message: "Viewed all",
                     child: Icon(
                       Icons.assignment_turned_in_outlined,
                       size: 30,
@@ -147,43 +146,90 @@ class _NotificationScreenState extends State<NotificationScreen>
           body: Column(
             children: [
               Container(
-                height: 50,
                 width: double.infinity,
-                padding: EdgeInsets.all(5),
-                margin: EdgeInsets.only(bottom: 5),
+                padding: EdgeInsets.only(left: 5,right: 5),
                 decoration: BoxDecoration(
                   color: Colors.white,
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey.withOpacity(0.5),
-                      blurRadius: 7,
-                      offset: Offset(0, 10), // changes position of shadow
-                    ),
-                  ],
                 ),
-                child: TabBar(
-                    controller: _tabController,
-                    isScrollable: false,
-                    indicator: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20.0),
-                        color: Colors.indigo[900]),
-                    labelColor: Colors.white,
-                    unselectedLabelColor: Colors.black54,
-                    tabs: [
-                      Tab(
-                        child: Text(
-                          "CHƯA ĐỌC",
-                          style: TextStyle(fontSize: 17),
+                child: Wrap(
+                  spacing: 5,
+                  children: [
+                    Stack(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(right: 10, top: 10),
+                          child: ChoiceChip(
+                            label: Text("Unread"),
+                            labelStyle: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.w500,
+                                fontSize: 16),
+                            selected: notificationController.indexNotification.value == 0,
+                            selectedColor: Colors.blue[200],
+                            onSelected: (value) {
+                              _tabController.index = 0;
+                            },
+                          ),
                         ),
-                      ),
-                      Tab(
-                        child: Text(
-                          "TẤT CẢ",
-                          style: TextStyle(fontSize: 17),
+                        Positioned(
+                          top: 5,
+                          right: 5,
+                          child: Container(
+                            padding: EdgeInsets.all(4),
+                            decoration: BoxDecoration(
+                              color: Colors.red,
+                              shape: BoxShape.circle
+                            ),
+                            child: Text(
+                              "0",
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 16
+                              ),
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                    Stack(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(right: 10, top: 10),
+                          child: ChoiceChip(
+                            label: Text("All"),
+                            labelStyle: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.w500,
+                                fontSize: 16),
+                            selected: notificationController.indexNotification.value == 1,
+                            selectedColor: Colors.blue[200],
+                            onSelected: (value) {
+                              _tabController.index = 1;
+                            },
+                          ),
                         ),
-                      )
-                    ]),
-              ),
+                        Positioned(
+                          top: 5,
+                          right: 5,
+                          child: Container(
+                            padding: EdgeInsets.all(4),
+                            decoration: BoxDecoration(
+                              color: Colors.red,
+                              shape: BoxShape.circle
+                            ),
+                            child: Text(
+                              "2",
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 16
+                              ),
+                            ),
+                          ),
+                        )
+                      ],
+                    )
+                  ],
+                )),
               Expanded(
                 child: TabBarView(
                   controller: _tabController,
@@ -211,7 +257,7 @@ class _NotificationScreenState extends State<NotificationScreen>
     return RefreshIndicator(
                 displacement: 100,
                 onRefresh: _refresh,
-                color: Colors.red,
+                color: Colors.indigo[900],
       child: SingleChildScrollView(
                   physics: BouncingScrollPhysics(),
                   keyboardDismissBehavior:
@@ -232,8 +278,8 @@ class _NotificationScreenState extends State<NotificationScreen>
               shrinkWrap: true,
               physics: NeverScrollableScrollPhysics(),
               itemCount: readedNotification
-                  ? 4
-                  : 6,
+                  ? 2
+                  : 0,
               itemBuilder: (context, index) {
                 return Card(
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),

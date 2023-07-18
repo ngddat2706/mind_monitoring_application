@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:status_alert/status_alert.dart';
 
 import '../../controllers/add_device_controller.dart';
 import '../../controllers/home_controller.dart';
@@ -40,7 +41,7 @@ class _AddDeviceScreenState extends State<AddDeviceScreen> {
         automaticallyImplyLeading: false,
         leadingWidth: 0,
         title: Text(
-          "Thêm thiết bị mới",
+          "CREATE NEW DEVICE",
           style: TextStyle(
               color: Colors.indigo[900],
               fontSize: 18,
@@ -63,7 +64,7 @@ class _AddDeviceScreenState extends State<AddDeviceScreen> {
                     Container(
                       padding: EdgeInsets.only(top: 10, bottom: 5, left: 14),
                       child: Text(
-                        "Tên thiết bị:",
+                        "Name:",
                         style: TextStyle(color: Colors.black, fontSize: 18),
                       ),
                     ),
@@ -85,7 +86,7 @@ class _AddDeviceScreenState extends State<AddDeviceScreen> {
                         ),
                         decoration: InputDecoration(
                             contentPadding: EdgeInsets.only(top: 2, bottom: 2, left: 10, right: 5),
-                            hintText: "Tên thiết bị",
+                            hintText: "Enter name",
                             errorText: addDeviceController.nameError.value==""
                               ?null
                               :addDeviceController.nameError.value,
@@ -120,7 +121,7 @@ class _AddDeviceScreenState extends State<AddDeviceScreen> {
                     Container(
                       padding: EdgeInsets.only(top: 10, bottom: 5, left: 14),
                       child: Text(
-                        "Mô tả thiết bị:",
+                        "Description:",
                         style: TextStyle(color: Colors.black, fontSize: 18),
                       ),
                     ),
@@ -143,7 +144,7 @@ class _AddDeviceScreenState extends State<AddDeviceScreen> {
                         ),
                         decoration: InputDecoration(
                             contentPadding: EdgeInsets.only(top: 2, bottom: 2, left: 10, right: 5),
-                            hintText: "Mô tả thiết bị",
+                            hintText: "Enter description",
                             hintStyle: TextStyle(color: Colors.grey, fontSize: 16),
                             border: InputBorder.none,
                             focusedErrorBorder: OutlineInputBorder(
@@ -177,7 +178,7 @@ class _AddDeviceScreenState extends State<AddDeviceScreen> {
                       child: Row(
                         children: [
                           Text(
-                            "Trạng thái:",
+                            "Status:",
                             style: TextStyle(color: Colors.black, fontSize: 18),
                           ),
                           SizedBox(width: 10,),
@@ -185,7 +186,7 @@ class _AddDeviceScreenState extends State<AddDeviceScreen> {
                             value: addDeviceController.status.value,
                             borderRadius: BorderRadius.circular(10),
                             alignment: Alignment.center,
-                            items: <String>['hoạt động', 'dừng hoạt động']
+                            items: <String>['Active', 'Inactive']
                                 .map<DropdownMenuItem<String>>((String value) {
                               return DropdownMenuItem<String>(
                                 value: value,
@@ -221,7 +222,7 @@ class _AddDeviceScreenState extends State<AddDeviceScreen> {
                                   shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(15))),
                               child: Text(
-                                "Hủy",
+                                "CLOSE",
                                 style: TextStyle(color: Colors.white, fontSize: 15),
                               ),
                             ),
@@ -249,14 +250,29 @@ class _AddDeviceScreenState extends State<AddDeviceScreen> {
                                       setState(() {
                                         state = ButtonState.loading;
                                       });
-                                      await Future.delayed(Duration(seconds: 2));
-                                      setState(() {
-                                        state = ButtonState.done;
-                                      });
-                                      await Future.delayed(Duration(seconds: 1));
-                                      setState(() {
-                                        state = ButtonState.init;
-                                      });
+                                      if(await addDeviceController.addNewDevice()){
+                                        StatusAlert.show(
+                                          context,
+                                          duration: Duration(seconds: 1),
+                                          subtitle: "Success!",
+                                          configuration: IconConfiguration(icon: Icons.done, size: 60),
+                                          maxWidth: 150,
+                                        );
+                                        setState(() {
+                                          state = ButtonState.done;
+                                        });
+                                      }else{
+                                        StatusAlert.show(
+                                          context,
+                                          duration: Duration(seconds: 1),
+                                          subtitle: "Failure!",
+                                          configuration: IconConfiguration(icon: Icons.dangerous_outlined, size: 60),
+                                          maxWidth: 150,
+                                        );
+                                        setState(() {
+                                          state = ButtonState.init;
+                                        });
+                                      }
                                       Get.back();
                                     }
                                   },
@@ -267,7 +283,7 @@ class _AddDeviceScreenState extends State<AddDeviceScreen> {
                                   child: FittedBox(
                                     fit: BoxFit.scaleDown,
                                     child: Text(
-                                      "Thêm",
+                                      "SAVE",
                                       style: TextStyle(
                                           color: Colors.white, fontSize: 15),
                                     ),

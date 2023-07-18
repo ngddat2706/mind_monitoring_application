@@ -107,34 +107,9 @@ class _HomeScreenState extends State<HomeScreen> {
           leadingWidth: 0,
           title: Row(
             children: [
-              Visibility(
-                visible: kIsWeb,
-                child: Image.asset(
-                  'assets/logo.png',
-                  height: 60,
-                ),
-              ),
-              Visibility(
-                visible: !kIsWeb,
-                child: ElevatedButton(
-                onPressed: () {
-                  Get.to(SettingScreen());
-                },
-                style: ElevatedButton.styleFrom(
-                    primary: Colors.white,
-                    visualDensity: VisualDensity(horizontal: 0, vertical: 0),
-                    padding: EdgeInsets.all(0),
-                    minimumSize: Size(30, 30),
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(15))),
-                child: Container(
-                  child: Icon(
-                    Icons.account_circle_outlined,
-                    size: 30,
-                    color: Colors.indigo[900],
-                  ),
-                ),
-              ),
+              Image.asset(
+                'assets/logo.png',
+                height: 60,
               ),
               Text(
                     "Device: " + loginController.userNameLogin.value,
@@ -179,8 +154,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
                   Positioned(
-                    top: 0,
-                    right: 7,
+                    top: kIsWeb?0:10,
+                    right: kIsWeb?7:15,
                     child: Container(
                       padding: EdgeInsets.all(5),
                       decoration: BoxDecoration(
@@ -194,21 +169,18 @@ class _HomeScreenState extends State<HomeScreen> {
                 ],
               ),
                SizedBox(width: kIsWeb?10:0,),
-               Visibility(
-                visible: kIsWeb,
-                 child: TextButton(
-                   onPressed: () {
-                     functionLogout();
-                   },
-                   style: TextButton.styleFrom(
-                       primary: Colors.white,
-                       ),
-                   child: Text(
-                     "LOGOUT",
-                     style: TextStyle(
-                       color: Colors.black,
-                       fontSize: 16,
+               TextButton(
+                 onPressed: () {
+                   functionLogout();
+                 },
+                 style: TextButton.styleFrom(
+                     primary: Colors.blue,
                      ),
+                 child: Text(
+                   "LOGOUT",
+                   style: TextStyle(
+                     color: Colors.black,
+                     fontSize: 16,
                    ),
                  ),
                ),
@@ -479,7 +451,10 @@ class _HomeScreenState extends State<HomeScreen> {
                 barrierDismissible: false);
           },
           backgroundColor: Color.fromARGB(255, 0, 22, 100),
-          child: Icon(Icons.add),
+          child: Tooltip(
+            message: "CREATE NEW DEVICE",
+            child: Icon(Icons.add)
+          ),
         ),
       ),
     );

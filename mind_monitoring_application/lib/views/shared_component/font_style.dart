@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:get/get.dart';
 
 class CustomFontStyle{
+  static String getDateAndTime(DateTime dateTime) {
+    String date = "${dateTime.day < 10 ? '0' : ''}${dateTime.day}/${dateTime.month < 10 ? '0' : ''}${dateTime.month}/${dateTime.year}";
+
+    String time = '${dateTime.hour < 10 ? '0' : ''}${dateTime.hour}:${dateTime.minute < 10 ? '0' : ''}${dateTime.minute}';
+    return date + " - " + time;
+  }
 static Widget functionForAdmin(icon, name, childFunction, function) {
     return Container(
         margin: const EdgeInsets.all(10),
@@ -61,5 +65,60 @@ static Widget functionForAdmin(icon, name, childFunction, function) {
               ),
       ),
     );
+  }
+
+  static Widget indexInformationStation(icon, name, value) {
+    return Container(
+        padding: EdgeInsets.only(top: 5),
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(bottom: 5),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Icon(
+                    icon,
+                    color: Colors.indigo[900],
+                    size: 17,
+                  ),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  Container(
+                    child: Text(
+                      name,
+                      style: TextStyle(
+                        fontSize: 17,
+                        color: Colors.indigo[900],
+                      ),
+                    ),
+                  ),
+// Địa chỉ trạm
+                  Expanded(
+                    child: Container(
+                      alignment: Alignment.centerRight,
+                      padding: EdgeInsets.only(left: 10),
+                      child: Text(
+                        value,
+                        textAlign: TextAlign.end, // Điền địa chỉ vào
+                        style: TextStyle(
+                          fontSize: 17,
+                          color: Colors.indigo[900],
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Container(
+              width: double.infinity,
+              height: 0.5,
+              color: Colors.grey[400],
+            )
+          ],
+        ));
   }
 }
