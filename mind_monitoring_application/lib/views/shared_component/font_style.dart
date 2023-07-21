@@ -67,57 +67,86 @@ static Widget functionForAdmin(icon, name, childFunction, function) {
     );
   }
 
-  static Widget indexInformationStation(icon, name, value) {
+  static Widget indexInformationStation(name, value) {
     return Container(
-        padding: EdgeInsets.only(top: 5),
-        child: Column(
+        margin: EdgeInsets.only(top: 2),
+        color: Color.fromARGB(255, 0, 8, 50),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Padding(
-              padding: const EdgeInsets.only(bottom: 5),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Icon(
-                    icon,
-                    color: Colors.indigo[900],
-                    size: 17,
-                  ),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  Container(
-                    child: Text(
-                      name,
-                      style: TextStyle(
-                        fontSize: 17,
-                        color: Colors.indigo[900],
-                      ),
-                    ),
-                  ),
-// Địa chỉ trạm
-                  Expanded(
-                    child: Container(
-                      alignment: Alignment.centerRight,
-                      padding: EdgeInsets.only(left: 10),
-                      child: Text(
-                        value,
-                        textAlign: TextAlign.end, // Điền địa chỉ vào
-                        style: TextStyle(
-                          fontSize: 17,
-                          color: Colors.indigo[900],
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
+            Container(
+              padding: EdgeInsets.only(left: 8, top: 3, bottom: 3),
+              width: 120,
+              child: Text(
+                name,
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                ),
               ),
             ),
+// Địa chỉ trạm
+            Expanded(
+              flex: 2,
+              child: Container(
+                padding: EdgeInsets.only(left: 8, top: 3, bottom: 3),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  border: Border.all(color: Color.fromARGB(255, 0, 8, 50))
+                ),
+                child: Text(
+                  value,
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ));
+  }
+  static Widget indexInformationDevice(name, value) {
+    return Container(
+        margin: EdgeInsets.only(top: 2),
+        color: Color.fromARGB(255, 0, 8, 50),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
             Container(
-              width: double.infinity,
-              height: 0.5,
-              color: Colors.grey[400],
-            )
+              padding: EdgeInsets.only(left: 8, top: 3, bottom: 3),
+              width: 120,
+              child: Text(
+                name,
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                ),
+              ),
+            ),
+// Địa chỉ trạm
+            Expanded(
+              flex: 2,
+              child: Container(
+                padding: EdgeInsets.only(left: 8, top: 3, bottom: 3),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  border: Border.all(color: Color.fromARGB(255, 0, 8, 50))
+                ),
+                child: Text(
+                  value,
+                  style: TextStyle(
+                    fontSize: 15,
+                    color: Colors.grey[800],
+                  ),
+                ),
+              ),
+            ),
           ],
         ));
   }

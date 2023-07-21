@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mind_monitoring_application/controllers/home_controller.dart';
 import 'package:mind_monitoring_application/views/shared_component/general_screen.dart';
-import 'package:mind_monitoring_application/views/shared_component/models_result_screen.dart';
 import 'package:mind_monitoring_application/views/shared_component/raw_eff_data_screen.dart';
 import 'package:mind_monitoring_application/views/shared_component/tgam_extraction_screen.dart';
 
@@ -21,7 +20,7 @@ class _DetailDeviceScreenState extends State<DetailDeviceScreen> with TickerProv
   void initState() {
     super.initState();
     tabController =
-        TabController(length: 4, vsync: this);
+        TabController(length: 3, vsync: this);
     tabController.addListener(() {
       
     });
@@ -35,7 +34,6 @@ class _DetailDeviceScreenState extends State<DetailDeviceScreen> with TickerProv
   }
   @override
   Widget build(BuildContext context) {
-    final width = MediaQuery.of(context).size.width;
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -97,9 +95,6 @@ class _DetailDeviceScreenState extends State<DetailDeviceScreen> with TickerProv
                 Tab(
                   text: "RAW EEF DATA",
                 ),
-                Tab(
-                  text: "MODELS RESULT",
-                )
               ],
             ),
           ),
@@ -110,7 +105,6 @@ class _DetailDeviceScreenState extends State<DetailDeviceScreen> with TickerProv
                 GeneralScreen(),
                 TgamExtractionScreen(),
                 RawEEFDataScreen(),
-                ModelsResultScreen()
                ],
              ),
            ),

@@ -1,11 +1,8 @@
-
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mind_monitoring_application/models/model_device.dart';
 
 import '../datas/globalData.dart';
 import '../services/value_service.dart';
-import '../views/pages/home_screen.dart';
 import 'login_controller.dart';
 
 enum HomeScreenState {initScreen, reportScreen, notificationScreen, intormationScreen}

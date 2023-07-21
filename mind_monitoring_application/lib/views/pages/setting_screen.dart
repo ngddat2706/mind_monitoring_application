@@ -33,7 +33,7 @@ class _SettingScreenState extends State<SettingScreen>
       if (Platform.isAndroid || Platform.isIOS) {
         final _preferences = await SharedPreferences.getInstance();
         if (state == AppLifecycleState.resumed) {
-          NotificationSettings settings = await FirebaseMessaging.instance
+          await FirebaseMessaging.instance
               .requestPermission(
             alert: true,
             announcement: true,
@@ -83,7 +83,7 @@ class _SettingScreenState extends State<SettingScreen>
     if (!kIsWeb) {
       if (Platform.isAndroid || Platform.isIOS) {
         if (!controller.statusNotification.value) {
-          NotificationSettings settings = await FirebaseMessaging.instance
+          await FirebaseMessaging.instance
               .requestPermission(
             alert: true,
             announcement: true,

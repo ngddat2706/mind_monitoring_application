@@ -40,7 +40,7 @@ void main() async {
 
       FirebaseMessaging messaging = FirebaseMessaging.instance;
 
-      NotificationSettings settings = await messaging
+      await messaging
           .requestPermission(
         alert: true,
         announcement: true,
@@ -80,7 +80,7 @@ void main() async {
           print("FirebaseMessaging.onMessageOpenedApp.listen");
         },
       );
-      FirebaseFirestore firestore = FirebaseFirestore.instance;
+      FirebaseFirestore.instance;
     }
   }
 

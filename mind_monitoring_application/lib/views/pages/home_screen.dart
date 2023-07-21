@@ -8,10 +8,10 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tiengviet/tiengviet.dart';
 
 import '../../controllers/home_controller.dart';
+import '../../controllers/value_controller.dart';
 import '../../datas/globalData.dart';
 import 'add_device_screen.dart';
 import 'detail_device_screen.dart';
-import 'setting_screen.dart';
 import 'dart:io' show Platform;
 import 'package:flutter/foundation.dart' show kIsWeb;
 
@@ -25,6 +25,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   TextEditingController? _textEditingController = TextEditingController();
   HomeController homeController = Get.put(HomeController());
+  ValueController valueController = Get.put(ValueController());
   LoginController loginController = Get.find();
   GlobalData globalData = Get.find();
   List<Widget> listDataFlow = <Widget>[].obs;
@@ -374,9 +375,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                                   ]),
                                               child: ElevatedButton(
                                                 style: ElevatedButton.styleFrom(
-                                                    primary: Color.fromARGB(
+                                                    backgroundColor: Color.fromARGB(
                                                         255, 0, 8, 50),
-                                                    onPrimary: Colors.blue[300],
+                                                    foregroundColor: Colors.blue[300],
                                                     visualDensity:
                                                         VisualDensity(
                                                             horizontal: 0,
