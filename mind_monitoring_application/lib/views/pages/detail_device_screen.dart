@@ -24,6 +24,7 @@ class _DetailDeviceScreenState extends State<DetailDeviceScreen> with TickerProv
     super.initState();
     valueController.fetchNewValue();
     valueController.fetchNewRawValue();
+    valueController.fetchNewFFTValue();
     tabController =
         TabController(length: 3, vsync: this);
     tabController.addListener(() {

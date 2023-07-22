@@ -2,7 +2,7 @@ import 'dart:convert';
 
 ModelValueLast5Min modelValueLast5MinFromJson(String str) => ModelValueLast5Min.fromJson(json.decode(str));
 
-String modelValueLast5MinToJson(ModelValueLast5Min data) => json.encode(data.toJson());
+// String modelValueLast5MinToJson(ModelValueLast5Min data) => json.encode(data.toJson());
 
 class ModelValueLast5Min {
     List<General> generals;
@@ -18,10 +18,10 @@ class ModelValueLast5Min {
         data8Bands: List<Data8Band>.from(json["data8Bands"].map((x) => Data8Band.fromJson(x))),
     );
 
-    Map<String, dynamic> toJson() => {
-        "generals": List<dynamic>.from(generals.map((x) => x.toJson())),
-        "data8Bands": List<dynamic>.from(data8Bands.map((x) => x.toJson())),
-    };
+    // Map<String, dynamic> toJson() => {
+    //     "generals": List<dynamic>.from(generals.map((x) => x.toJson())),
+    //     "data8Bands": List<dynamic>.from(data8Bands.map((x) => x.toJson())),
+    // };
 }
 
 class Data8Band {
@@ -61,14 +61,14 @@ class Data8Band {
 
     factory Data8Band.fromJson(Map<String, dynamic> json) => Data8Band(
         id: json["id"],
-        delta: json["delta"],
-        theta: json["theta"],
-        alpha: json["alpha"],
-        lowBeta: json["lowBeta"],
-        midBeta: json["midBeta"],
-        highBeta: json["highBeta"],
-        gamma: json["gamma"],
-        uhfGamma: json["uhfGamma"],
+        delta: json["delta"]??0,
+        theta: json["theta"]??0,
+        alpha: json["alpha"]??0,
+        lowBeta: json["lowBeta"]??0,
+        midBeta: json["midBeta"]??0,
+        highBeta: json["highBeta"]??0,
+        gamma: json["gamma"]??0,
+        uhfGamma: json["uhfGamma"]??0,
         deviceDataId: json["deviceDataId"],
         isDeleted: json["isDeleted"],
         createdTime: DateTime.parse(json["createdTime"]),
@@ -124,27 +124,27 @@ class General {
 
     factory General.fromJson(Map<String, dynamic> json) => General(
         id: json["id"],
-        poorQuality: json["poorQuality"],
-        attention: json["attention"],
+        poorQuality: json["poorQuality"]??0,
+        attention: json["attention"]??0,
         meditation: json["meditation"],
         deviceId: json["deviceId"],
         isDeleted: json["isDeleted"],
-        createdTime: DateTime.parse(json["createdTime"]),
+        createdTime: (json["createdTime"]!=null)?DateTime.parse(json["createdTime"]):DateTime.now(),
         createdBy: json["createdBy"],
         lastModifiedTime: DateTime.parse(json["lastModifiedTime"]),
         lastModifiedBy: json["lastModifiedBy"],
     );
 
-    Map<String, dynamic> toJson() => {
-        "id": id,
-        "poorQuality": poorQuality,
-        "attention": attention,
-        "meditation": meditation,
-        "deviceId": deviceId,
-        "isDeleted": isDeleted,
-        "createdTime": createdTime.toIso8601String(),
-        "createdBy": createdBy,
-        "lastModifiedTime": lastModifiedTime.toIso8601String(),
-        "lastModifiedBy": lastModifiedBy,
-    };
+    // Map<String, dynamic> toJson() => {
+    //     "id": id,
+    //     "poorQuality": poorQuality,
+    //     "attention": attention,
+    //     "meditation": meditation,
+    //     "deviceId": deviceId,
+    //     "isDeleted": isDeleted,
+    //     "createdTime": createdTime.toIso8601String(),
+    //     "createdBy": createdBy,
+    //     "lastModifiedTime": lastModifiedTime.toIso8601String(),
+    //     "lastModifiedBy": lastModifiedBy,
+    // };
 }
