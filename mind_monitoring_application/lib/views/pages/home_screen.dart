@@ -8,7 +8,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tiengviet/tiengviet.dart';
 
 import '../../controllers/home_controller.dart';
-import '../../controllers/value_controller.dart';
 import '../../datas/globalData.dart';
 import 'add_device_screen.dart';
 import 'detail_device_screen.dart';
@@ -25,7 +24,6 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   TextEditingController? _textEditingController = TextEditingController();
   HomeController homeController = Get.put(HomeController());
-  ValueController valueController = Get.put(ValueController());
   LoginController loginController = Get.find();
   GlobalData globalData = Get.find();
   List<Widget> listDataFlow = <Widget>[].obs;
@@ -130,6 +128,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               child: Stack(
                             children: [
                               Container(
+                                constraints: BoxConstraints(maxWidth: 700),
                                   margin: EdgeInsets.only(
                                       left: 3, right: 3, top: 30, bottom: 30),
                                   child: ClipRRect(
@@ -442,6 +441,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     child: Stack(
                   children: [
                     Container(
+                      constraints: BoxConstraints(maxWidth: 700),
                         margin: EdgeInsets.only(
                             left: 5, right: 5, top: 40, bottom: 30),
                         child: ClipRRect(

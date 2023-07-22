@@ -16,14 +16,13 @@ class GeneralScreen extends StatefulWidget {
 
 class _GeneralScreenState extends State<GeneralScreen> {
   HomeController homeController = Get.find();
-  String yourJson = '{"general": {"poorQuality": "<<Fill a integer value form 0 to 255>>","attention": "<<Fill a integer value form 0 to 255>>","meditation": "<<Fill a integer value form 0 to 255>>","deviceId": "3fa85f64-5717-4562-b3fc-2c963f66afa6"},"delta": "<<Fill a integer value form 0 to 255>>","theta": "<<Fill a integer value form 0 to 255>>","alpha": "<<Fill a integer value form 0 to 255>>","lowBeta": "<<Fill a integer value form 0 to 255>>","midBeta": "<<Fill a integer value form 0 to 255>>","highBeta": "<<Fill a integer value form 0 to 255>>","gamma": "<<Fill a integer value form 0 to 255>>","uhfGamma": "<<Fill a integer value form 0 to 255, preferably 512 number separated value (by,)>>",  "rawEEGs": [0  ]}';
-
   
   String prettyString = "";
 
   @override
   void initState() {
     // TODO: implement initState
+    String yourJson = '{"general": {"poorQuality": "<<Fill a integer value form 0 to 255>>","attention": "<<Fill a integer value form 0 to 255>>","meditation": "<<Fill a integer value form 0 to 255>>","deviceId": "'+ (homeController.indexDevice.value.id??"") +'"},"delta": "<<Fill a integer value form 0 to 255>>","theta": "<<Fill a integer value form 0 to 255>>","alpha": "<<Fill a integer value form 0 to 255>>","lowBeta": "<<Fill a integer value form 0 to 255>>","midBeta": "<<Fill a integer value form 0 to 255>>","highBeta": "<<Fill a integer value form 0 to 255>>","gamma": "<<Fill a integer value form 0 to 255>>","uhfGamma": "<<Fill a integer value form 0 to 255, preferably 512 number separated value (by,)>>",  "rawEEGs": [0  ]}';
     final object = json.decode(yourJson);
     prettyString = JsonEncoder.withIndent('  ').convert(object);
     super.initState();
@@ -105,6 +104,7 @@ class _GeneralScreenState extends State<GeneralScreen> {
               Container(
                 padding: EdgeInsets.only(left: 5, right: 5, top: 10, bottom: 10),
                 decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(5),
                   color: Colors.white,
                   boxShadow: [
                     BoxShadow(

@@ -5,6 +5,8 @@ import 'package:mind_monitoring_application/views/shared_component/general_scree
 import 'package:mind_monitoring_application/views/shared_component/raw_eff_data_screen.dart';
 import 'package:mind_monitoring_application/views/shared_component/tgam_extraction_screen.dart';
 
+import '../../controllers/value_controller.dart';
+
 
 class DetailDeviceScreen extends StatefulWidget {
   const DetailDeviceScreen({Key? key}) : super(key: key);
@@ -16,21 +18,23 @@ class DetailDeviceScreen extends StatefulWidget {
 class _DetailDeviceScreenState extends State<DetailDeviceScreen> with TickerProviderStateMixin {
   late TabController tabController;
   HomeController homeController = Get.find();
+  ValueController valueController = Get.put(ValueController());
   @override
   void initState() {
     super.initState();
+    valueController.fetchNewValue();
+    valueController.fetchNewRawValue();
     tabController =
         TabController(length: 3, vsync: this);
     tabController.addListener(() {
       
     });
-    //controlStationController.connectMQTT('mqtt.abcsolutions.com.vn', 'monitoring_mobile', 1883, "abcsolution", "CseLAbC5c6");
   }
   @override
   void dispose() {
     // TODO: implement dispose
     super.dispose();
-    //controlStationController.disconnectMQTT();
+
   }
   @override
   Widget build(BuildContext context) {
