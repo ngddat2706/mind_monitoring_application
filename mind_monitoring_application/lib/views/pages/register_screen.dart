@@ -23,7 +23,7 @@ class _AddDeviceScreenState extends State<RegisterScreen> {
     loginController.passwordRegisterController.clear();
     loginController.emailControler.clear();
     loginController.confirm.clear();
-    loginController.emailControler.clear();
+    loginController.fullName.clear();
     super.initState();
   }
 

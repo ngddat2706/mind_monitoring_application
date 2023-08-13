@@ -1,4 +1,4 @@
-import 'package:firebase_messaging/firebase_messaging.dart';
+// import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mind_monitoring_application/controllers/login_controller.dart';
@@ -11,7 +11,7 @@ import '../../controllers/home_controller.dart';
 import '../../datas/globalData.dart';
 import 'add_device_screen.dart';
 import 'detail_device_screen.dart';
-import 'dart:io' show Platform;
+// import 'dart:io' show Platform;
 import 'package:flutter/foundation.dart' show kIsWeb;
 
 class HomeScreen extends StatefulWidget {
@@ -64,12 +64,12 @@ class _HomeScreenState extends State<HomeScreen> {
 
   void functionLogout() async {
    
-      if (!kIsWeb) {
-        if (Platform.isAndroid || Platform.isIOS) {
-          FirebaseMessaging.instance
-            .unsubscribeFromTopic(controller.userNameLogin.value);
-          }
-      }
+      // if (!kIsWeb) {
+      //   if (Platform.isAndroid || Platform.isIOS) {
+      //     FirebaseMessaging.instance
+      //       .unsubscribeFromTopic(controller.userNameLogin.value);
+      //     }
+      // }
       controller.passwordController.clear();
       controller.userNameController.clear();
       controller.userName = "";
@@ -105,58 +105,58 @@ class _HomeScreenState extends State<HomeScreen> {
                         color: Colors.black,),
                   ),
               Spacer(),
-              Stack(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(right: 10, top: 10, bottom: 10),
-                    child: TextButton(
-                      onPressed: () {
-                        Get.dialog(
-                          Center(
-                              child: Stack(
-                            children: [
-                              Container(
-                                constraints: BoxConstraints(maxWidth: 700),
-                                  margin: EdgeInsets.only(
-                                      left: 3, right: 3, top: 30, bottom: 30),
-                                  child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(20),
-                                      child: NotificationScreen())),
-                            ],
-                          )),
-                        );
-                      },
-                      style: TextButton.styleFrom(
-                          primary: Colors.white,
-                          visualDensity:
-                              VisualDensity(horizontal: 0, vertical: 0),
-                          padding: EdgeInsets.all(0),
-                          minimumSize: Size(30, 30),
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(15))),
-                      child: Icon(
-                        Icons.notifications_outlined,
-                        color: Colors.black,
-                        size: 30,
-                      ),
-                    ),
-                  ),
-                  Positioned(
-                    top: kIsWeb?0:10,
-                    right: kIsWeb?7:15,
-                    child: Container(
-                      padding: EdgeInsets.all(5),
-                      decoration: BoxDecoration(
-                          color: Colors.red[900], shape: BoxShape.circle),
-                      child: Text(
-                        "2",
-                        style: TextStyle(color: Colors.white, fontSize: 16),
-                      ),
-                    ),
-                  )
-                ],
-              ),
-               SizedBox(width: kIsWeb?10:0,),
+              // Stack(
+              //   children: [
+              //     Padding(
+              //       padding: const EdgeInsets.only(right: 10, top: 10, bottom: 10),
+              //       child: TextButton(
+              //         onPressed: () {
+              //           Get.dialog(
+              //             Center(
+              //                 child: Stack(
+              //               children: [
+              //                 Container(
+              //                   constraints: BoxConstraints(maxWidth: 700),
+              //                     margin: EdgeInsets.only(
+              //                         left: 3, right: 3, top: 30, bottom: 30),
+              //                     child: ClipRRect(
+              //                         borderRadius: BorderRadius.circular(20),
+              //                         child: NotificationScreen())),
+              //               ],
+              //             )),
+              //           );
+              //         },
+              //         style: TextButton.styleFrom(
+              //             primary: Colors.white,
+              //             visualDensity:
+              //                 VisualDensity(horizontal: 0, vertical: 0),
+              //             padding: EdgeInsets.all(0),
+              //             minimumSize: Size(30, 30),
+              //             shape: RoundedRectangleBorder(
+              //                 borderRadius: BorderRadius.circular(15))),
+              //         child: Icon(
+              //           Icons.notifications_outlined,
+              //           color: Colors.black,
+              //           size: 30,
+              //         ),
+              //       ),
+              //     ),
+              //     Positioned(
+              //       top: kIsWeb?0:10,
+              //       right: kIsWeb?7:15,
+              //       child: Container(
+              //         padding: EdgeInsets.all(5),
+              //         decoration: BoxDecoration(
+              //             color: Colors.red[900], shape: BoxShape.circle),
+              //         child: Text(
+              //           "2",
+              //           style: TextStyle(color: Colors.white, fontSize: 16),
+              //         ),
+              //       ),
+              //     )
+              //   ],
+              // ),
+              //  SizedBox(width: kIsWeb?10:0,),
                TextButton(
                  onPressed: () {
                    functionLogout();

@@ -1,4 +1,6 @@
 
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -18,6 +20,7 @@ class LoginController extends GetxController{
   TextEditingController fullName = TextEditingController();
   var userNameLogin ="BrwS".obs;
   var statusNotification = true.obs;
+  var userId = "".obs;
 
   var userName = '';
   var password = '';
@@ -29,6 +32,18 @@ class LoginController extends GetxController{
         await LoginService.fetchAuth(userName, password);
     if (newAccessToken != null) {
       globalData.accessToken.value = newAccessToken;
+      //print(newAccessToken);
+      //print(newAccessToken.split(".")[1]);
+      try{
+        var decodedPayload = String.fromCharCodes(base64Url.decode(base64Url.normalize(newAccessToken.split(".")[1])));
+        var payloadMap = json.decode(decodedPayload);
+        //print(payloadMap);
+        userNameLogin.value =payloadMap["name"];
+        userId.value = payloadMap["userId"];
+      }catch(exception){
+        print("fail decode");
+      }
+      
       return true;
     }
     return false;

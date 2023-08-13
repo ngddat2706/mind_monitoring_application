@@ -33,7 +33,15 @@ class LoginService {
       "passwordHash": password,
       "passwordSalt": password,
       "email": email,
-      "name": fullName
+      "name": fullName,
+       "isDeleted": true,
+      "createdTime": "2023-08-13T19:36:46.863Z",
+      "createdBy": "string",
+      "lastModifiedTime": "2023-08-13T19:36:46.863Z",
+      "lastModifiedBy": "string",
+      "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+      "photoFileName": "string",
+      "role": 0,
     };
     var response = await ConnectionService.client.post(
       url,
@@ -46,6 +54,7 @@ class LoginService {
     if (response.statusCode == 200) {
       return "";
     }
+    print(response.body);
     return null;
   }
 }
