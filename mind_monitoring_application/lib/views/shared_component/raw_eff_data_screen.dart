@@ -163,14 +163,14 @@ class _RawEEFDataScreenState extends State<RawEEFDataScreen> {
   }
 
   /// The method returns line series to chart.
-  List<LineSeries<ModelValueRawLast5Min, String>> _getDefaultLineSeries() {
-    return <LineSeries<ModelValueRawLast5Min, String>>[
-      LineSeries<ModelValueRawLast5Min, String>(
+  List<LineSeries<int, String>> _getDefaultLineSeries() {
+    return <LineSeries<int, String>>[
+      LineSeries<int, String>(
         legendIconType: LegendIconType.rectangle,
-        dataSource: valueController.valueRawLast5min,
-        xValueMapper: (ModelValueRawLast5Min sales, _) =>
-            DateFormat("hh:mm a - MMMM dd,yyyy").format(sales.recivedTime),
-        yValueMapper: (ModelValueRawLast5Min sales, _) => sales.value,
+        dataSource: valueController.listIndex,
+        xValueMapper: (int sales, _) =>
+            DateFormat("hh:mm a - MMMM dd,yyyy").format(valueController.valueRawLast5min.value.recivedTimes[sales]),
+        yValueMapper: (int sales, _) => valueController.valueRawLast5min.value.values[sales],
         width: 2,
         name: 'Raw EEG',
         color: Colors.blue[900],
@@ -211,8 +211,8 @@ class _RawEEFDataScreenState extends State<RawEEFDataScreen> {
         color: Colors.blue[900],
         dataSource: valueController.valueLastFFT.value.amplitudeSpectrum,
         xValueMapper: (ModelValueRawLast5Min sales, _) =>
-            DateFormat("hh:mm a - MMMM dd,yyyy").format(sales.recivedTime),
-        yValueMapper: (ModelValueRawLast5Min sales, _) => sales.value,
+            DateFormat("hh:mm a - MMMM dd,yyyy").format(DateTime.now()),
+        yValueMapper: (ModelValueRawLast5Min sales, _) => 2,
         width: 2,
         name: 'Amplitude Spectrum',
       ),

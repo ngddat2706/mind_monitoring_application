@@ -9,8 +9,9 @@ import '../models/model_value_last_5min.dart';
 class ValueController extends GetxController{
   HomeController homeController = Get.find();
   Rx<ModelValueLast5Min> valueLast5Min = ModelValueLast5Min(data8Bands: [], generals: []).obs;
-  List<ModelValueRawLast5Min> valueRawLast5min = <ModelValueRawLast5Min>[];
+  Rx<ModelValueRawLast5Min> valueRawLast5min = ModelValueRawLast5Min(values: [], recivedTimes: []).obs;
   Rx<ModelValueFft> valueLastFFT = ModelValueFft(amplitudeSpectrum: [], frequencyAxis: []).obs;
+  List<int> listIndex = [];
   var loadingScreenTgam = false.obs;
   var loadingScreenRaw = false.obs;
   var loadingScreenFTT = false.obs;
@@ -32,11 +33,12 @@ class ValueController extends GetxController{
     var newValue =
         await Last5minsValueService.fetchrawvalue(deviceId: homeController.indexDevice.value.id??"");
     if (newValue != null) {
-      valueRawLast5min = newValue;
+      valueRawLast5min.value = newValue;
+      listIndex = List.generate(valueRawLast5min.value.recivedTimes.length, (index) => index);
       loadingScreenRaw.value =false;
       return true;
     }
-    valueRawLast5min = [];
+    valueRawLast5min.value = ModelValueRawLast5Min(values: [], recivedTimes: []);
     return false;
   }
   Future<bool> fetchNewFFTValue() async {

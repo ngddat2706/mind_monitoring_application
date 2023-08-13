@@ -1,25 +1,25 @@
 import 'dart:convert';
 
-List<ModelValueRawLast5Min> modelValueRawLast5MinFromJson(String str) => List<ModelValueRawLast5Min>.from(json.decode(str).map((x) => ModelValueRawLast5Min.fromJson(x)));
+ModelValueRawLast5Min modelValueRawLast5MinFromJson(String str) => ModelValueRawLast5Min.fromJson(json.decode(str));
 
 String modelValueRawLast5MinToJson(List<ModelValueRawLast5Min> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
 class ModelValueRawLast5Min {
-    int value;
-    DateTime recivedTime;
+    List<int> values;
+    List<DateTime> recivedTimes;
 
     ModelValueRawLast5Min({
-        required this.value,
-        required this.recivedTime,
+      required  this.values,
+      required  this.recivedTimes,
     });
 
     factory ModelValueRawLast5Min.fromJson(Map<String, dynamic> json) => ModelValueRawLast5Min(
-        value: json["value"],
-        recivedTime: DateTime.parse(json["recivedTime"]),
+        values: List<int>.from(json["values"].map((x) => x)),
+        recivedTimes: List<DateTime>.from(json["recivedTimes"].map((x) => DateTime.parse(x))),
     );
 
     Map<String, dynamic> toJson() => {
-        "value": value,
-        "recivedTime": recivedTime.toIso8601String(),
+        "values": List<dynamic>.from(values.map((x) => x)),
+        "recivedTimes": List<dynamic>.from(recivedTimes.map((x) => x.toIso8601String())),
     };
 }

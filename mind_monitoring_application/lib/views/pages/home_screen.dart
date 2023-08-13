@@ -63,19 +63,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   void functionLogout() async {
-    final timegap = DateTime.now().difference(pre_backpress);
-    final cantExit = timegap >= Duration(seconds: 2);
-    pre_backpress = DateTime.now();
-    if (cantExit) {
-      Get.closeAllSnackbars();
-      Get.snackbar(
-        "Brainwave System",
-        "Nhấn lần nữa để đăng xuất!",
-        isDismissible: true,
-        duration: Duration(seconds: 2),
-      );
-      // false will do nothing when back press
-    } else {
+   
       if (!kIsWeb) {
         if (Platform.isAndroid || Platform.isIOS) {
           FirebaseMessaging.instance
@@ -92,7 +80,7 @@ class _HomeScreenState extends State<HomeScreen> {
       preferences.remove('username');
       preferences.remove('password');
       Get.offNamed('/login'); // true will exit the app
-    }
+    
   }
 
   @override
