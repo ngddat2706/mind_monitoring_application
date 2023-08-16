@@ -1,1 +1,1 @@
-const String server = "brwsyswebapis.azurewebsites.net";
+const String server = "brainwavesystemapis.azurewebsites.net";
